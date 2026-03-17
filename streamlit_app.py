@@ -17,7 +17,7 @@ st.sidebar.title("🛡️ ReputacionIA")
 st.sidebar.write("Protege la imagen de tu negocio en Inca y toda España.")
 st.sidebar.markdown("---")
 # PEGA AQUÍ TU LINK DE STRIPE REAL
-st.sidebar.link_button("🚀 Activar Plan Pro (19€/mes)", "https://buy.stripe.com")
+st.sidebar.link_button("🚀 Activar Plan Pro (19€/mes)", https://buy.stripe.com/test_8x228s3gX7JZ0dCdCHefC00)
 st.sidebar.write("✅ Respuestas ilimitadas")
 st.sidebar.write("✅ Optimización SEO local")
 
