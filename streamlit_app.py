@@ -1,39 +1,36 @@
 import streamlit as st
+import openai
 
-# 1. Configuración profesional de la página
+# 1. Configuración del "cerebro" (Llave de seguridad)
+client = openai.OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
+
+# 2. Diseño de la página
 st.set_page_config(page_title="ReputacionIA - Gestión de Reseñas", page_icon="🤖")
 
-# 2. Estilo personalizado (Fondo y Botones)
-st.markdown("""
-    <style>
-    .main { background-color: #f5f7f9; }
-    .stButton>button { width: 100%; border-radius: 5px; height: 3em; background-color: #007bff; color: white; }
-    </style>
-    """, unsafe_allow_html=True)
+st.title("🤖 ReputacionIA: Asistente de Reseñas")
+st.write("Responde a tus reseñas con inteligencia artificial de forma profesional.")
 
-# 3. Barra Lateral (Sidebar) con el Pago Real
+# 3. BARRA LATERAL CON EL PAGO REAL (19€)
 st.sidebar.title("🚀 Plan Profesional")
-st.sidebar.write("Obtén acceso ilimitado a la IA para responder a tus clientes.")
-
-# ESTE ES TU ENLACE REAL DE STRIPE (19€)
 st.sidebar.link_button("🔥 Activar Plan Pro (19€/mes)", "https://buy.stripe.com")
-
 st.sidebar.divider()
-st.sidebar.write("✅ Respuestas ilimitadas")
-st.sidebar.write("✅ Optimización SEO local")
+st.sidebar.write("✅ Respuestas Inteligentes Reales")
 st.sidebar.write("✅ Soporte 24/7")
 
-# 4. Cuerpo de la APP
-st.title("🤖 ReputacionIA: Asistente de Reseñas")
-st.write("Convierte las quejas de tus clientes en oportunidades de fidelización en segundos.")
-
-# Cuadro para pegar la reseña
-resena_cliente = st.text_area("Pega aquí la reseña de tu cliente:", placeholder="Ejemplo: La comida estaba fría y el servicio fue lento...")
+# 4. CUADRO PARA PEGAR LA RESEÑA
+resena_cliente = st.text_area("Pega aquí la reseña de tu cliente:", placeholder="Ejemplo: El hotel estaba muy limpio pero el parking era pequeño...")
 
 if st.button("Generar Respuesta Profesional"):
     if resena_cliente:
-        st.info("Generando respuesta con Inteligencia Artificial...")
-        # Aquí iría la lógica de la IA, por ahora mostramos un ejemplo
-        st.success("**Respuesta sugerida:** ¡Hola! Lamentamos mucho tu experiencia. Estamos trabajando para mejorar y nos encantaría invitarte de nuevo para compensarte. ¡Un saludo!")
+        st.info("La IA está analizando la reseña...")
+        # Aquí la IA crea la respuesta de verdad
+        response = client.chat.completions.create(
+            model="gpt-3.5-turbo",
+            messages=[
+                {"role": "system", "content": "Eres un experto en reputación hotelera. Responde de forma amable y profesional."},
+                {"role": "user", "content": resena_cliente}
+            ]
+        )
+        st.success(response.choices.message.content)
     else:
         st.warning("Por favor, pega una reseña para poder ayudarte.")
